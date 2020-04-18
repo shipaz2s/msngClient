@@ -12,7 +12,6 @@ class MesClient : public QMainWindow
 protected:
     QTcpSocket* pTcpSocket;
     quint16 nextBlockSize;
-
     QString strHost;
     int nPort;
 
