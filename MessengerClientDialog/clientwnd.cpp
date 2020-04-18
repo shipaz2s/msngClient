@@ -15,6 +15,7 @@ ClientWnd::ClientWnd(const QString& strHost, int nPort, QWidget *parent):
     slotShowSysMsg();
     setFriendModel();
 
+
     connect(ui->listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(selectContact(QListWidgetItem*)));
 
     pClientServerThread = new QThread();
