@@ -31,6 +31,8 @@ MesClient::~MesClient(){
             frLstFile->close();
         delete frLstFile;
     }
+    pTcpSocket->disconnectFromHost();
+    pTcpSocket->deleteLater();
 }
 
 bool MesClient::readFriendList(){
@@ -103,7 +105,14 @@ void MesClient::slotSendToServer(QString txt){
     out << quint16(0) << QTime::currentTime() << txt;
 
     out.device()->seek(0);
-    out << static_cast<quint16>( (arrBlock.size()) - sizeof(quint16) );
+    out << quint16( (arrBlock.size()) - sizeof(quint16) );
 
     pTcpSocket->write(arrBlock);
+}
+
+void MesClient::slotDisconnect(){
+    //pTcpSocket->disconnect();
+    pTcpSocket->disconnectFromHost();
+    sysMsg = "Disconnected from server";
+    emit showSysMsg();
 }

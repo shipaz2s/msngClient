@@ -4,7 +4,12 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    ClientWnd wnd("localhost",2323);
+    QFile hostfile("./data/host.txt");
+    if (hostfile.exists()){
+        hostfile.open(QFile::ReadOnly);
+    }
+    QString host = hostfile.readLine();
+    ClientWnd wnd(host,2323);
 
     wnd.show();
 

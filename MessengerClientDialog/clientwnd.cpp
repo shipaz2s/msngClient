@@ -9,10 +9,12 @@ ClientWnd::ClientWnd(const QString& strHost, int nPort, QWidget *parent):
     connect(this, SIGNAL(showSysMsg()), SLOT(slotShowSysMsg()) );
     connect(ui->action_Connect, SIGNAL( triggered() ), this, SLOT( slotReconnect() ) );
     connect(ui->action_Login, SIGNAL(triggered()), this, SLOT(login()));
+    connect(ui->action_Log_out, SIGNAL(triggered()), this, SLOT(slotDisconnect()) );
     connect(ui->sendButton, SIGNAL(clicked), this, SLOT(sendButtonClicked()));
 
     slotShowSysMsg();
     setFriendModel();
+
 
     connect(ui->listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(selectContact(QListWidgetItem*)));
 
@@ -22,7 +24,8 @@ ClientWnd::ClientWnd(const QString& strHost, int nPort, QWidget *parent):
 
 ClientWnd::~ClientWnd(){
     delete ui;
-    delete pClientServer;
+    if (!pClientServer.isNull())
+        delete pClientServer;
     pClientServerThread->quit();
     pClientServerThread->wait();
     delete pClientServerThread;
