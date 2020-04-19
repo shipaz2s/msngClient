@@ -8,6 +8,7 @@ ClientServer::ClientServer(int id):nextBlockSize(0), ownId(id){
         clientServer->close();
         return;
     }
+    connect(clientServer, SIGNAL(newConnection()), this, SLOT(slotNewConnection()));
 }
 
 ClientServer::~ClientServer(){
@@ -51,6 +52,9 @@ void ClientServer::slotReadClient(){
                 break;
             in >> nextBlockSize;
         }
+        if (pClientSocket->bytesAvailable() < nextBlockSize){
+            break;
+        }
         QString str;
         int id = 0;
         in >> id >> str;
@@ -60,15 +64,17 @@ void ClientServer::slotReadClient(){
 
 void ClientServer::sendMsg(const QString &ip, const QString &str){
     QHostAddress addr(ip);
+    QString k = addr.toString();
     QByteArray buff;
     pClientSocket->connectToHost(addr,2324);
+    pClientSocket->waitForConnected();
     QDataStream out(&buff, QIODevice::WriteOnly);
     out << quint16(0) << ownId << str;
     out.device()->seek(0);
     out << quint16(buff.size() - sizeof(quint16));
 
     pClientSocket->write(buff);
-    pClientSocket->disconnectFromHost();
+    //pClientSocket->disconnectFromHost();
 }
 
 
