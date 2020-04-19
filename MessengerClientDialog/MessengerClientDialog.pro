@@ -35,6 +35,6 @@ FORMS += \
     clientwnd.ui
 
 DISTFILES += \
-    ../../build-MessengerClientDialog-Desktop_Qt_5_14_0_MinGW_32_bit-Debug/data/frLst.data \
-    ../../build-MessengerClientDialog-Desktop_Qt_5_14_0_MinGW_32_bit-Debug/data/host.txt \
-    ../../build-MessengerClientDialog-Desktop_Qt_5_14_0_MinGW_32_bit-Debug/data/logData.data
+    data/frLst.data \
+    data/host.txt \
+    data/logData.data
