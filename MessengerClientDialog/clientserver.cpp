@@ -8,6 +8,7 @@ ClientServer::ClientServer(int id):nextBlockSize(0), ownId(id){
         clientServer->close();
         return;
     }
+    connect(clientServer, SIGNAL(newConnection()), this, SLOT(slotNewConnection()));
 }
 
 ClientServer::~ClientServer(){
@@ -62,13 +63,16 @@ void ClientServer::sendMsg(const QString &ip, const QString &str){
     QHostAddress addr(ip);
     QByteArray buff;
     pClientSocket->connectToHost(addr,2324);
+    pClientSocket->waitForConnected();
+    int t = pClientSocket->state();
     QDataStream out(&buff, QIODevice::WriteOnly);
     out << quint16(0) << ownId << str;
     out.device()->seek(0);
     out << quint16(buff.size() - sizeof(quint16));
 
-    pClientSocket->write(buff);
-    pClientSocket->disconnectFromHost();
+    int k = pClientSocket->write(buff);
+    t = pClientSocket->state();
+    //pClientSocket->disconnectFromHost();
 }
 
 

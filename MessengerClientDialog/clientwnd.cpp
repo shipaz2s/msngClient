@@ -10,7 +10,7 @@ ClientWnd::ClientWnd(const QString& strHost, int nPort, QWidget *parent):
     connect(ui->action_Connect, SIGNAL( triggered() ), this, SLOT( slotReconnect() ) );
     connect(ui->action_Login, SIGNAL(triggered()), this, SLOT(login()));
     connect(ui->action_Log_out, SIGNAL(triggered()), this, SLOT(slotDisconnect()) );
-    connect(ui->sendButton, SIGNAL(clicked), this, SLOT(sendButtonClicked()));
+    connect(ui->sendButton, SIGNAL(clicked()), this, SLOT(sendButtonClicked()));
 
     slotShowSysMsg();
     setFriendModel();
