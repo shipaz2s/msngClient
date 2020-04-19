@@ -12,6 +12,7 @@
 #include <QBrush>
 #include <QThread>
 #include <QKeyEvent>
+#include <QPointer>
 
 #include "mesclient.h"
 #include "clientserver.h"
@@ -38,7 +39,7 @@ private:
 
     QString contactIp;
 
-    ClientServer * pClientServer;
+    QPointer<ClientServer>  pClientServer;
     QThread * pClientServerThread;
 
     void keyPressEvent(QKeyEvent *event);

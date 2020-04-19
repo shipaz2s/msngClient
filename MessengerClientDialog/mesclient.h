@@ -38,6 +38,7 @@ protected slots:
     void slotSendToServer(QString);
     void slotConnected();
     void slotReconnect();
+    void slotDisconnect();
     //void slotConnectToUser();
 };
 
